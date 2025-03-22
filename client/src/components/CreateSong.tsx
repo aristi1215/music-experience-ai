@@ -3,6 +3,7 @@ import { Loader } from "../components/Loader";
 import MusicVisualizer from "./MusicVisualizer";
 import { InputField } from "./InputField";
 import { ToastContainer, toast } from "react-toastify";
+import { Slider } from "./Slider";
 
 export const CreateSong = () => {
   const [taskId, setTaskId] = useState("");
@@ -22,6 +23,8 @@ export const CreateSong = () => {
     title: "",
     style: "",
   });
+
+  const [visualizeImage, setVisualizeImages] = useState(false);
 
   const createTask = async (prompt: string, style: string, title: string) => {
     if (!prompt || !style || !title) {
@@ -136,7 +139,11 @@ export const CreateSong = () => {
 
   return (
     <main className="min-h-screen bg-black p-5 pt-10 flex flex-col items-center">
-      <div className={`flex items-center justify-around text-white ${loading && 'w-full'}`}>
+      <div
+        className={`flex items-center justify-around text-white ${
+          loading && "w-full"
+        }`}
+      >
         <div
           className={`${
             songDetails || loading ? "w-[40%]" : "w-[100%]"
@@ -193,15 +200,18 @@ export const CreateSong = () => {
             </div>
           )}
           {loading && (
-            
             <div
               role="status"
               className="max-w-sm w-[40rem] p-4 border border-gray-200 rounded-sm shadow-sm animate-pulse md:p-6 dark:border-gray-700"
             >
               <div className="my-5">
-              <p className="text-white text-lg">We are creating your song.... </p>
-              <p className="text-white text-sm">This could take up to 1 minute </p>
-              <Loader />
+                <p className="text-white text-lg">
+                  We are creating your song....{" "}
+                </p>
+                <p className="text-white text-sm">
+                  This could take up to 1 minute{" "}
+                </p>
+                <Loader />
               </div>
               <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4"></div>
               <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5"></div>
@@ -224,9 +234,10 @@ export const CreateSong = () => {
           )}
         </aside>
       </div>
-      <button className="my-10 rounded-xl py-2 px-10 bg-[#D94AA7] text-white cursor-pointer">
+      <button className="my-10 rounded-xl py-2 px-10 bg-[#D94AA7] text-white cursor-pointer" onClick={() => setVisualizeImages(true)}>
         Visualize it
       </button>
+      {visualizeImage && <Slider prompt={form.prompt} count={10} />}
     </main>
   );
 };
